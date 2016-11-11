@@ -12,7 +12,7 @@ namespace _8_11_Messenger.Hubs
         {
             Clients.All.hello();
         }
-
+        //
         public void Send(string name,string message,string dateNow)
         {
             Clients.All.addNewMessageToPage(name, message,dateNow);
