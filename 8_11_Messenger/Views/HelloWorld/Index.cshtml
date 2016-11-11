@@ -1,0 +1,192 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+
+    Session["today"] = DateTime.Now.Date;
+
+}
+<input type="hidden" id="displayName" />
+<script>
+    $(function () {
+
+        var chat = $.connection.chatHub;
+        var b = "gg";
+        chat.client.addNewMessageToPage = function (name, message, dateNow) {
+            if (name == $('#displayName').val()) {
+                $('#messages').append('<div class="me text" id="msgqkhgrosvr" mid="1"><span class="hidden_text">' + name + '：</span>' + message + '<div class="me comment"><span class="read" style="display: inline;">已送達<br></span><span class="hidden_text"> (</span><time class="timeago" datetime="' + dateNow + '">刚刚</time><span class="hidden_text">)<br></span></div></div>');
+            } else {
+                $('#messages').append('<div class="stranger text " mid="0"><span class="hidden_text">' + name + '：</span>' + message + '<div class="stranger comment"><span class="hidden_text"> (</span><div class="mobile" style="display: block;">App</div><time class="timeago" datetime="' + dateNow + '">刚刚</time><span class="hidden_text">)<br></span></div></div>');
+            }
+
+        };
+
+        chat.client.changeTimeAgo = function (time) {
+            $('.timeago').each(function (index) {
+                $(this).html(jQuery.timeago($(this).attr('datetime')));
+            })
+        };
+
+        $('#displayName').val(prompt('enter your name:', ""));
+        $.connection.hub.start().done(function () {
+
+            console.log(b);
+            var sendMessage = function () {
+                var timenow = new Date();
+                if (b != "@DateTime.Now.Date") {
+                    $('#messages').append('<div class="system text timediff">今日 (' + (timenow.getMonth() + 1) + '月' + timenow.getDate() + '日)</div>');
+                    console.log("@Session["today"]");
+                    b = "@DateTime.Now.Date";
+                }
+
+                var curT = timenow.getFullYear() + "-" + (timenow.getMonth() + 1) + "-" + timenow.getDate() + "T" + timenow.getHours() + ":" + timenow.getMinutes() + ":" + timenow.getSeconds() + "." + timenow.getMilliseconds();
+                chat.server.send($('#displayName').val(), $('#messageInput').val(), curT);
+                $('#main').animate({ scrollTop: 9999 }, 'slow');
+                $('#messageInput').val('');
+            };
+            $('#messageInput').keypress(function (e) {
+                if (e.which == 13) {
+                    sendMessage();
+                }
+            })
+            $('#sendMessageBtn').click(sendMessage);
+            setInterval(function () {
+                chat.server.sendTimeAgo('a');
+            }, 10000);
+
+        });
+    });
+</script>
+
+<div id="wrapper" class="snap-content">
+    <div id="main" style="height: 100%;">
+
+        <div>
+            <div id="contents">
+                <div class="bg-image">
+                    <div class="image">
+                        <div class="logowrapper">
+                            <div class="header" id="logoContent">
+                                <div class="logo"><img src="~/echo.png"></div>
+                                <div class="slogan"><div id="sloganText">寂寞 找我</div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="image" id="keyPanel" style="display: none;">
+                        <div class="logowrapper">
+                            <div class="keybox" style="opacity: 0;">
+                                <input type="text" id="keyInput" placeholder="輸入密語來相遇" class="" readonly="">
+                                <div id="tip" class="hide">
+                                    <input type="button" class="keyword" value="熟男熟女"><input type="button" class="keyword" value="台中"><input type="button" class="keyword" value="Pokemon"><input type="button" class="keyword" value="Lesbian"><input type="button" class="keyword" value="Gay"><input type="button" class="keyword" value="成人模式">
+                                </div>
+                            </div>
+                        </div>
+                        <iframe id="tmp_downloadhelper_iframe" style="display: none;"></iframe>
+                    </div>
+
+
+                    <div class="buttons" style="display: block;">
+                        <input type="button" id="startButton" value="開始聊天" style="opacity: 1;">
+                    </div>
+                </div>
+                <blockquote id="messages" class="clearfix" style="display: none !important">
+                    <div class="loadMoreButton">
+                        <input type="button" value="?" onclick="loadMore();">
+                    </div>
+                </blockquote>
+            </div>
+
+
+            <div id="help" style="display: none;">
+
+                <article>
+                    <h1>
+                        開始使用前<br>
+                        請同意並確實遵守<br>
+                        <a href="/eula" target="_blank">WooTalk使用者條款</a>
+                    </h1>
+                </article>
+                <article>
+                    <h1>吾聊是什麼</h1>
+                    <p>找個人，輕鬆的聊天。若要結束，就點擊左下角的離開。</p>
+                </article>
+                <article>
+                    <h1>吾聊會不穩斷線嗎？</h1>
+                    <p>在吾聊使用無痕模式，會造成隨機斷線，且難以救回。</p>
+                    <p>只要瀏覽器不使用無痕或隱私模式，不使用清理系統工具，電腦或手機不爆炸，不論重開機、重新整理、網路斷線，你們之間仍然聯繫著。</p>
+                    <p>要真正的讓對話斷線，請使用左下角的離開按鈕。</p>
+                </article>
+                <article>
+                    <h1>密語是什麼？ 有什麼功能？</h1>
+                    <p>密語用來與使用相同"密語"的人相遇。</p>
+                    <p>
+                        舉例來說，可以使用"練英文"與對方練習英文。<br>
+                        使用"台南"找尋台南人，或與網友約好密語在app上加密聊天。<br>
+
+                    </p><p>
+                        密語也支援使用網址直連：<br>
+                        例如可以用此網址「http://wootalk.today/key/八卦版」<br>
+                        讓點擊的網友直接就會使用八卦版這個密語。
+                    </p>
+                    <p>想聊成人話題時，請記得用"成人模式"密語唷！</p>
+                    <p></p>
+                </article>
+                <article>
+                    <h1>吾聊安全嗎？</h1>
+                    <p>對話全程採用TLS 1.2加密傳輸，剩下的就是你與陌生人的事情了。</p>
+                    <p>在與陌生人聊天的過程中，請不要隨意留給對方隱私資訊(如：信用卡號碼、帳號密碼)。</p>
+                </article>
+                <article>
+                    <h1>已送達跟已讀是一樣的意思嗎？</h1>
+                    <p>兩者不同，已送達代表訊息已經傳至對方的裝置上(電腦或行動裝置)，並不代表對方已經讀過。例如縮小視窗、切換至背景、甚至人不在電腦前面，也會顯示已送達。</p>
+                    <p>吾聊沒有已讀功能，是為了讓吾友們上來輕鬆的聊天。</p>
+                </article>
+                <article>
+                    <h1>為什麼沒看到已送達？</h1>
+                    <p>當訊息沒有送至對方時(例如：對方網路不穩或者關閉瀏覽器或App)，就不會顯示已送達。等到對方重新連上網路或者回到吾聊網站，就會出現已送達。</p>
+                </article>
+                <article style="text-align: center;">
+                    <h1>吾聊有Android App嗎？</h1>
+                    <p>WooTalk推出專屬App囉~ ❤(◕‿◕✿)</p><a href="https://wootalk.today/app" target="_blank"><img style="margin: 8px; height:60px" alt="Get it on Google Play" src="/googleplay2.svg"></a><br><a href="https://wootalk.today/app" target="_blank"></a>
+                </article>
+                <article>
+                    <h1>吾聊有iPhone App嗎？</h1>
+                    <p>我們在App Store還沒上架，但現在可以安裝到桌面。</p>
+                    <p>用手機瀏覽器開啟吾聊後，選擇分享按鈕，再選加入主畫面。</p>
+                </article>
+                <article>
+                    <h1>我遇到問題了！</h1>
+                    <p>請至<a href="https://www.facebook.com/wootalk.today" target="_blank">WooTalk吾聊粉絲專頁</a>。</p>
+                    <p>或寄信到<a href="mailto:service@wootalk.today">service@wootalk.today</a>。</p>
+                </article>
+                <article>
+                    <h1>要怎麼開始聊天？</h1>
+                    <p>按下面的按鈕，開始吧！</p>
+                </article>
+
+                <div class="buttons" style="display: block;">
+                    <input type="button" value="開始聊天" onclick="clickStartChat();">
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="sendBox" style="display: none !important">
+        <div>
+            <div>
+
+                <div id="changeButton"><input value="離開" onclick="changePerson()" type="button"></div>
+                <!--
+                <div id="changeButton" onclick="changePerson();"><i class="material-icons">&#xE14C;</i></div>
+
+                <div id="moreButton" onclick="insertToolbar();"><i class="material-icons">&#xE03B;</i></div>
+                -->
+                <div id="textBox"><input type="text" id="messageInput" placeholder="輸入訊息" autocomplete="off"></div>
+                <div id="sendButton">
+                    <input type="button" id="sendMessageBtn" value="傳送">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
