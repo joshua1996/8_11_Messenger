@@ -12,6 +12,7 @@ namespace _8_11_Messenger.Controllers
         public ActionResult Index(string button)
         {
             return View();
+            Response.sess
         }
         
         //public string Index()

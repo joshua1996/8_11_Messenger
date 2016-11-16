@@ -1,60 +1,20 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
-
-    Session["today"] = DateTime.Now.Date;
-
+    //if ((string)Session["userid"] == null)
+    //{
+    //    Response.Write("null");
+    //    Random r = new Random();
+    //    Session["userid"] = r.Next(0, 100000).ToString();
+    //}
+    //else
+    //{
+    //    Response.Write("not" + Session["userid"]);
+    //}
 }
 <input type="hidden" id="displayName" />
+<input type="hidden" id="groupid" />
 <script>
-    $(function () {
-
-        var chat = $.connection.chatHub;
-        var b = "gg";
-        chat.client.addNewMessageToPage = function (name, message, dateNow) {
-            if (name == $('#displayName').val()) {
-                $('#messages').append('<div class="me text" id="msgqkhgrosvr" mid="1"><span class="hidden_text">' + name + '：</span>' + message + '<div class="me comment"><span class="read" style="display: inline;">已送達<br></span><span class="hidden_text"> (</span><time class="timeago" datetime="' + dateNow + '">刚刚</time><span class="hidden_text">)<br></span></div></div>');
-            } else {
-                $('#messages').append('<div class="stranger text " mid="0"><span class="hidden_text">' + name + '：</span>' + message + '<div class="stranger comment"><span class="hidden_text"> (</span><div class="mobile" style="display: block;">App</div><time class="timeago" datetime="' + dateNow + '">刚刚</time><span class="hidden_text">)<br></span></div></div>');
-            }
-
-        };
-
-        chat.client.changeTimeAgo = function (time) {
-            $('.timeago').each(function (index) {
-                $(this).html(jQuery.timeago($(this).attr('datetime')));
-            })
-        };
-
-        $('#displayName').val(prompt('enter your name:', ""));
-        $.connection.hub.start().done(function () {
-
-            console.log(b);
-            var sendMessage = function () {
-                var timenow = new Date();
-                if (b != "@DateTime.Now.Date") {
-                    $('#messages').append('<div class="system text timediff">今日 (' + (timenow.getMonth() + 1) + '月' + timenow.getDate() + '日)</div>');
-                    console.log("@Session["today"]");
-                    b = "@DateTime.Now.Date";
-                }
-
-                var curT = timenow.getFullYear() + "-" + (timenow.getMonth() + 1) + "-" + timenow.getDate() + "T" + timenow.getHours() + ":" + timenow.getMinutes() + ":" + timenow.getSeconds() + "." + timenow.getMilliseconds();
-                chat.server.send($('#displayName').val(), $('#messageInput').val(), curT);
-                $('#main').animate({ scrollTop: 9999 }, 'slow');
-                $('#messageInput').val('');
-            };
-            $('#messageInput').keypress(function (e) {
-                if (e.which == 13) {
-                    sendMessage();
-                }
-            })
-            $('#sendMessageBtn').click(sendMessage);
-            setInterval(function () {
-                chat.server.sendTimeAgo('a');
-            }, 10000);
-
-        });
-    });
+   
 </script>
 
 <div id="wrapper" class="snap-content">
@@ -92,6 +52,7 @@
                     <div class="loadMoreButton">
                         <input type="button" value="?" onclick="loadMore();">
                     </div>
+
                 </blockquote>
             </div>
 

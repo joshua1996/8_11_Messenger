@@ -24,8 +24,11 @@ namespace _8_11_Messenger
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/wootalkJS").Include(
+                "~/Scripts/jquery.timeago.js",
+                "~/Scripts/jquery.session.js",
+                "~/Scripts/require.js",
                 "~/Scripts/wootalkEvent.js",
-                "~/Scripts/jquery.timeago.js"));
+                "~/Scripts/signalrEvent.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/signalR").Include(
                 "~/Scripts/jquery.signalR-*"));
