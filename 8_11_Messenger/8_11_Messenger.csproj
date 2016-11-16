@@ -97,6 +97,14 @@
       <HintPath>..\packages\Microsoft.Owin.Hosting.2.0.2\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RazorEngine, Version=2.1.4113.149, Culture=neutral, PublicKeyToken=1f722ed313f51831, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorJS.0.4.3\lib\RazorEngine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RazorJS, Version=0.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorJS.0.4.3\lib\RazorJS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
       <HintPath>..\packages\Swashbuckle.Core.5.0.0\lib\net40\Swashbuckle.Core.dll</HintPath>
       <Private>True</Private>
@@ -250,6 +258,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\chatHub.cs" />
+    <Compile Include="Hubs\MyConnection1.cs" />
     <Compile Include="Hubs\MyUserFactory.cs" />
     <Compile Include="Hubs\userDetails.cs" />
     <Compile Include="Models\AccountViewModels.cs" />

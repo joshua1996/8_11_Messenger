@@ -10,8 +10,12 @@ namespace _8_11_Messenger.Hubs
     {
         public string GetUserId(IRequest request)
         {
-            return "thisisid";
-            
+            if (request.GetHttpContext().Request.Cookies["userid"] != null)
+            {
+                return request.GetHttpContext().Request.Cookies["userid"].Value;
+            }
+            return "";
+
         }
     }
 }

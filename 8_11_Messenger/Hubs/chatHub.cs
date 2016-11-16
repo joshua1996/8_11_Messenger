@@ -20,15 +20,19 @@ namespace _8_11_Messenger.Hubs
 
         public string GetSignalrID()
         {
-            return "thisisid";
+            if (Context.Request.GetHttpContext().Request.Cookies["userid"] != null)
+            {
+                return Context.Request.GetHttpContext().Request.Cookies["userid"].Value;
+            }
+            return "";
         }
 
 
         public void send(string name, string message, string dateNow, string groupid)
         {
-            Debug.WriteLine(groupid);
+            Debug.WriteLine(Context.User.Identity.Name);
             Clients.Group(groupid).addNewMessageToPage(name, message, dateNow);
-            Debug.WriteLine(groupid + "A");
+            Debug.WriteLine(Context.User.Identity.Name);
         }
 
         public void sendTimeAgo(string time)
@@ -38,10 +42,6 @@ namespace _8_11_Messenger.Hubs
 
         public void connect(string userid)
         {
-            var context = HttpContext.Current;
-            context.Response.Cookies.Add(new HttpCookie("useruser") { Value = "aa" });
-
-
             userDetails toUserID = new userDetails();
             var id = Context.ConnectionId;
             if (connectedUser.Count(x => x.connectionID == id) == 0)
