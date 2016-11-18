@@ -15,7 +15,7 @@ namespace _8_11_Messenger
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            RouteTable.Routes.MapConnection<MyConnection1>("echo", "/echo"); 
+            //RouteTable.Routes.MapConnection<MyConnection1>("echo", "/echo"); 
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

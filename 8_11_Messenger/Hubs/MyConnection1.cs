@@ -20,5 +20,11 @@ namespace _8_11_Messenger.Hubs
         {
             return Connection.Broadcast(data);
         }
+
+        protected override Task OnDisconnected(IRequest request, string connectionId,bool data)
+        {
+            Debug.WriteLine("welcome");
+            return Connection.Broadcast(connectionId);
+        }
     }
 }

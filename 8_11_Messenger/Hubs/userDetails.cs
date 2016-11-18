@@ -10,5 +10,6 @@ namespace _8_11_Messenger.Hubs
         public string userID { get; set; }
         public string  connectionID { get; set; }
         public bool wantChat { get; set; }
+        public string groupID { get; set; }
     }
 }

@@ -3,6 +3,8 @@ using Owin;
 using _8_11_Messenger.Hubs;
 using Microsoft.AspNet.SignalR;
 using System.Web.Http;
+using Microsoft.Owin.Security.Cookies;
+using Microsoft.AspNet.Identity;
 
 [assembly: OwinStartupAttribute(typeof(_8_11_Messenger.Startup))]
 namespace _8_11_Messenger
@@ -24,6 +26,12 @@ namespace _8_11_Messenger
                 });
             System.Web.HttpContext.Current.SetSessionStateBehavior(System.Web.SessionState.SessionStateBehavior.Required);
             app.UseWebApi(config);
+
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                LoginPath = new PathString("/Home/Index")
+            });
             app.MapSignalR();
         }
     }

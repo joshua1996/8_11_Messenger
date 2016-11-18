@@ -20,12 +20,16 @@ var initConnect = function () {
     //}
     $('#messages').append('<div class="system text "><span class="hidden_text">系統訊息：</span>找個人聊天...' + localStorage.getItem('userid') + '</div>');
 
-    var chat = $.connection.MyConnection1;
-
+    var chat = $.connection.chatHub;
     var b = "gg";
-
+    console.log('ddd');
     chat.client.addNewMessageToPage = function (name, message, dateNow) { //添加信息
         console.log('send');
+        var timenow = new Date();
+        if (b != "@DateTime.Now.Date") {
+            $('#messages').append('<div class="system text timediff">今日 (' + (timenow.getMonth() + 1) + '月' + timenow.getDate() + '日)</div>');
+            b = "@DateTime.Now.Date";
+        }
         if (name == localStorage.getItem('userid')) {
             $('#messages').append('<div class="me text" id="msgqkhgrosvr" mid="1"><span class="hidden_text">' + name + '：</span>' + message + '<div class="me comment"><span class="read" style="display: inline;">已送達<br></span><span class="hidden_text"> (</span><time class="timeago" datetime="' + dateNow + '">刚刚</time><span class="hidden_text">)<br></span></div></div>');
         } else {
@@ -39,19 +43,21 @@ var initConnect = function () {
         })
     };
 
-    chat.client.onConnected = function (groupID, currentUserID, toUserID) { //找对象
+    chat.client.onConnected = function (groupID) { //找对象
+        console.log("connect");
         localStorage.setItem('groupid', groupID);
-        // $.session.set('groupid', groupID);
-        //  $.session.set('currentUserID', currentUserID);
-        // $.session.set('toUserID', toUserID);
         $('#messages').append(' <div class="system text "><span class="hidden_text">系統訊息：</span>加密連線完成，開始聊天囉！' + localStorage.getItem('groupid') + '</div>');
 
     };
 
-    chat.client.reconnectBack = function () {
+    chat.client.reconnectBack = function () { //重连
         initPage();
         console.log('gg');
-    }
+    };
+
+    chat.client.disconnect = function () {
+        $('#messages').append(' <div class="system text "><span class="hidden_text">系統訊息：</span>离开</div>');
+    };
 
 
     $.connection.hub.start().done(function () {////////////////////////////////////////////
@@ -80,13 +86,23 @@ var initConnect = function () {
             chat.server.sendTimeAgo('a');
         }, 10000);
 
+        $("#leaveGroupBtn").click(function () { //离开
+            if (localStorage.getItem('groupid') === null) {
+
+            } else {
+                chat.server.disconnect(localStorage.getItem('groupid'));
+                localStorage.removeItem('groupid');
+               // $('#messages').empty(); 
+            }
+
+        });
     });
 }
 function registerEvents(chat) {
     if (localStorage.getItem('groupid') == null) {
         chat.server.connect(localStorage.getItem('userid'));
     } else {
-        // chat.server.reconnect($.session.get('groupid'), $.session.get('currentUserID'), $.session.get('toUserID'));
+        chat.server.reconnect(localStorage.getItem('groupid'), localStorage.getItem('userid'));
     }
 
 }

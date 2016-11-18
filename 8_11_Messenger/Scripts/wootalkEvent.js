@@ -6,7 +6,10 @@ $(document).ready(function () {
     $("#startButton").click(function () {
         initPage();
         initConnect();
+    });
 
+    $("#leaveGroupBtn").click(function () {
+     
     });
 
     $(window).resize(function () {
