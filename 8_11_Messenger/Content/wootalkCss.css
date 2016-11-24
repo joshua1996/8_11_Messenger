@@ -133,7 +133,7 @@ input, button, div {
 }
 
 #main {
-    background-image: url("/bg.jpg");
+    background-image: url("/blur-wide.jpg");
     background-size: 100% 100%;
     background-repeat: repeat;
     background-position: 0 0;
@@ -147,7 +147,7 @@ input, button, div {
 
 body.app {
     min-height: 100vh;
-    background-image: url("/bg.jpg");
+    background-image: url("/blur-wide.jpg");
     background-attachment: fixed;
     background-size: 100% 100%;
     background-repeat: repeat;
@@ -414,6 +414,7 @@ blockquote {
     padding: 10px 10px 0 10px;
     background-color: rgba(255,255,255,0.2);
     border-radius: 10px 10px 0px 0px;
+    border-left: 0px solid #eeeeee;
 }
 
     blockquote > div {
@@ -437,7 +438,7 @@ blockquote {
 
     blockquote div.stranger {
         float: left;
-        margin-left: 8px;
+        margin-left: 54px; /*8px*/
     }
 
         blockquote div.stranger.text::after {
@@ -449,7 +450,7 @@ blockquote {
             height: 1em;
             border-right: 0.5em solid #e5e5ea;
             border-bottom-right-radius: 1em 0.5em;
-            box-sizing:content-box;
+            box-sizing: content-box;
         }
 
     blockquote div.me {
@@ -600,7 +601,7 @@ blockquote input {
         margin-left: auto;
         margin-right: auto;
         text-align: center;
-        color: #ff0951;
+        color: #fd8ccf;
         font-size: 60px;
         background-color: transparent;
         font-weight: bold;
@@ -1128,7 +1129,7 @@ input[type=checkbox]:checked ~ label .check {
     right: 0;
     z-index: 999999;
     text-align: center;
-    background-image: url("/bg.jpg");
+    background-image: url("/blur-wide.jpg");
     background-size: 100% 100%;
     background-repeat: repeat;
     background-position: 0 0;
@@ -1162,7 +1163,7 @@ input[type=checkbox]:checked ~ label .check {
 
 body.help {
     min-height: 100vh;
-    background-image: url("/bg.jpg");
+    background-image: url("/blur-wide.jpg");
     background-attachment: fixed;
     background-size: 100% 100%;
     background-repeat: repeat;
@@ -1896,3 +1897,14 @@ span.right {
     text-indent: 0px;
     margin-top: -3px;
 }
+
+.profile {
+    left: -54px;
+    position: absolute;
+    top: 1px;
+}
+
+    .profile img {
+        height: 37px;
+            border-radius: 100%;
+    }

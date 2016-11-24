@@ -28,7 +28,8 @@ namespace _8_11_Messenger
                 "~/Scripts/jquery.session.js",
                 "~/Scripts/require.js",
                 "~/Scripts/wootalkEvent.js",
-                "~/Scripts/signalrEvent.js"));
+                "~/Scripts/signalrEvent.js",
+                "~/Scripts/emojionearea.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/signalR").Include(
                 "~/Scripts/jquery.signalR-*"));
@@ -36,7 +37,8 @@ namespace _8_11_Messenger
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/wootalkCss.css"));
+                      "~/Content/wootalkCss.css",
+                      "~/Content/emojionearea.css"));
         }
     }
 }

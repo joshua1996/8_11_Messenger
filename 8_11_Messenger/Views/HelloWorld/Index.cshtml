@@ -14,7 +14,13 @@
 <input type="hidden" id="displayName" />
 <input type="hidden" id="groupid" />
 <script>
-    storeUserID("@ViewBag.userid");
+    $(document).ready(function () {
+        $('#messageInput').emojioneArea({
+            pickerPosition: "top",
+            tonesStyle: "radio"
+        });
+    });
+
 </script>
 
 <div id="wrapper" class="snap-content">
@@ -28,7 +34,8 @@
                             <div class="header" id="logoContent">
                                 <div class="logo"><img src="~/echo.png"></div>
                                 <div class="slogan"><div id="sloganText">寂寞 找我</div></div>
-                            </div>
+                                <audio id="popSound" src="~/images/notify.mp3" type="audio/mp3" ></audio>
+                              </div>
                         </div>
                     </div>
                     <div class="image" id="keyPanel" style="display: none;">
@@ -48,9 +55,7 @@
                         <input type="button" id="startButton" value="開始聊天" style="opacity: 1;">
                     </div>
                 </div>
-                <blockquote id="messages" class="clearfix" style="display: none !important">
-                 
-                </blockquote>
+                <blockquote id="messages" class="clearfix" style="display: none !important"></blockquote>
             </div>
 
 
@@ -104,7 +109,7 @@
                 </article>
                 <article style="text-align: center;">
                     <h1>吾聊有Android App嗎？</h1>
-                    <p>WooTalk推出專屬App囉~ ❤(◕‿◕✿)</p><a href="https://wootalk.today/app" target="_blank"><img style="margin: 8px; height:60px" alt="Get it on Google Play" src="/googleplay2.svg"></a><br><a href="https://wootalk.today/app" target="_blank"></a>
+                    <p>WooTalk推出專屬App囉~ ❤(◕‿◕✿)</p><a href="https://wootalk.today/app" target="_blank"><img style="margin: 8px; height:60px" alt="Get it on Google Play" src=""></a><br><a href="https://wootalk.today/app" target="_blank"></a>
                 </article>
                 <article>
                     <h1>吾聊有iPhone App嗎？</h1>
@@ -132,7 +137,7 @@
         <div>
             <div>
 
-                <div id="changeButton"><input value="離開" id="leaveGroupBtn"  type="button"></div>
+                <div id="changeButton"><input value="離開" id="leaveGroupBtn" type="button"></div>
                 <!--
                 <div id="changeButton" onclick="changePerson();"><i class="material-icons">&#xE14C;</i></div>
 
